@@ -37,7 +37,8 @@ kubectl get deployments [ kubectl get deployment myapp-deployment ]
 <details><summary>show</summary>
 
 ```bash
-kubectl run --generator=deployment/v1beta1 nginx --image=nginx
+// For deployment, you do not need generator
+kubectl run nginx --image=nginx
 
 Recommended way:
 kubectl create deployment --image=nginx nginx
@@ -89,7 +90,7 @@ kubectl delete deployments myapp-deployment
 <details><summary>show</summary>
 
 ```bash
-kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run -o yaml
+kubectl run nginx --image=nginx --dry-run -o yaml
 OR
 kubectl create deployment --image=nginx nginx --dry-run -o yaml
 ```
@@ -99,7 +100,7 @@ kubectl create deployment --image=nginx nginx --dry-run -o yaml
 <details><summary>show</summary>
 
 ```bash
-kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run --replicas=4 -o yaml
+kubectl run nginx --image=nginx --dry-run --replicas=4 -o yaml
 
 //kubectl create deployment does not have a --replicas option. You could first create it and then scale it using the kubectl scale command
 ```
@@ -109,6 +110,6 @@ kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run --repli
 <details><summary>show</summary>
 
 ```bash
-kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run --replicas=4 -o yaml > nginx-deployment.yaml
+kubectl run nginx --image=nginx --dry-run --replicas=4 -o yaml > nginx-deployment.yaml
 ```
 </details>
