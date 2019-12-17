@@ -5,6 +5,9 @@
 
 ```bash
 kubectl run nginx --image nginx
+
+Imperative Command:
+kubectl run --generator=run-pod/v1 nginx --image=nginx
 ```
 </details>
 
@@ -81,3 +84,13 @@ kubectl delete -f pod-def.yml
 kubectl delete pod app-pod
 ```
 </details>
+
+### Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+<details><summary>show</summary>
+
+```bash
+kubectl run --generator=run-pod/v1 nginx --image=nginx --dry-run -o yaml
+```
+</details>
+
+
