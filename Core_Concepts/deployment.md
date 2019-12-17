@@ -1,4 +1,4 @@
-# ReplicaSet
+# Deployment
 
 ### Create deploy-definitions.yml 
 <details><summary>show</summary>
