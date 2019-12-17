@@ -13,7 +13,7 @@ kubectl run nginx --image nginx
 
 ```bash
 kubectl get pods
-kubectl get pods -o wide
+kubectl get pods -o wide  // Displays which node pod is located
 ```
 </details>
 
