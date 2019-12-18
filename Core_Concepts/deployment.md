@@ -86,6 +86,16 @@ kubectl delete deployments myapp-deployment
 ```
 </details>
 
+### edit yml file on the file without creating it
+<details><summary>show</summary>
+
+```bash
+kubectl edit deployment my-deployment
+Then edit the file to make the necessary changes, delete and re-create the pod.
+```
+</details>
+
+
 ### Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
 <details><summary>show</summary>
 
