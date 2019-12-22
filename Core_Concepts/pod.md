@@ -94,3 +94,32 @@ kubectl run --generator=run-pod/v1 nginx --image=nginx --dry-run -o yaml
 </details>
 
 
+### Create pod-definitions.yml with commands & args & env
+<details><summary>show</summary>
+
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+  labels:
+    type: webserver
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+    - name: redis-container
+      image: redis  
+      command: ["sleep"]
+      args: ["2000"]
+      env:
+        - name: APP_COLOR
+          value: pink
+```
+```bash
+kubectl create -f pod-def.yml
+kubectl get pods [ kubectl get pod app-pod ]
+```
+</details>
+
+
