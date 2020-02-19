@@ -100,7 +100,7 @@ Then edit the file to make the necessary changes, delete and re-create the pod.
 <details><summary>show</summary>
 
 ```bash
-kubectl run nginx --image=nginx --dry-run -o yaml
+kubectl run nginx --image=nginx --dry-run -o yaml  (By default, if you do not specify --generator, it takes deployment)
 OR
 kubectl create deployment --image=nginx nginx --dry-run -o yaml
 ```
