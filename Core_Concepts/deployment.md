@@ -113,6 +113,13 @@ kubectl create deployment --image=nginx nginx --dry-run -o yaml
 kubectl run nginx --image=nginx --dry-run --replicas=4 -o yaml
 
 //kubectl create deployment does not have a --replicas option. You could first create it and then scale it using the kubectl scale command
+
+Use the command 
+```bash
+kubectl create deployment webapp --image=kodekloud/webapp-color```
+Then scale the webapp to 3 using command 
+```bash
+kubectl scale deployment/webapp --replicas=3```
 ```
 </details>
 
