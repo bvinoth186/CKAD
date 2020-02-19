@@ -84,3 +84,17 @@ spec:
     limits.memory: 10Gi
 ```
 </details>
+
+### How to call services(pod) in different namespace
+<details><summary>show</summary>
+
+```{service_name}.{namespace_name}.svc.cluster.local
+```
+</details>
+
+### How to call services(pod) in same namespace
+<details><summary>show</summary>
+
+```{service_name}
+```
+</details>
