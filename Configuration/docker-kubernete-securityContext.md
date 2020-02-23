@@ -65,6 +65,7 @@ spec:
 
 ### Set securityContext at Container level
 <details><summary>show</summary>
+
 ```bash
 Capabilities are supported at only Container level NOT Pod Level
 
