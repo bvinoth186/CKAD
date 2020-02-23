@@ -2,9 +2,8 @@
 
 ### Give docker container more permission
 <details><summary>show</summary>
-Capabilities are located at : /usr/include/linux/capabilities.h
-
 ```bash
+Capabilities are located at : /usr/include/linux/capabilities.h
 docker run --cap-add MAC_ADMIN ubunty
 ```
 </details>
@@ -27,8 +26,8 @@ docker run --priviledged ubunty
 
 ### Run docker container as different user
 <details><summary>show</summary>
-You can add it in dockerFile as `USER 1000`
 ```bash
+You can add it in dockerFile as `USER 1000`
 docker run --user=1000 ubuntu sleep 3600
 ```
 </details>
@@ -63,8 +62,9 @@ spec:
 
 ### Set securityContext at Container level
 <details><summary>show</summary>
-Capabilities are supported at only Container level NOT Pod Level
 ```bash
+Capabilities are supported at only Container level NOT Pod Level
+
 apiVersion: v1
 kind: Pod
 metadata:
