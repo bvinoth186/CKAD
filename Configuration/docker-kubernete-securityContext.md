@@ -2,6 +2,7 @@
 
 ### Give docker container more permission
 <details><summary>show</summary>
+
 ```bash
 Capabilities are located at : /usr/include/linux/capabilities.h
 docker run --cap-add MAC_ADMIN ubunty
@@ -26,6 +27,7 @@ docker run --priviledged ubunty
 
 ### Run docker container as different user
 <details><summary>show</summary>
+
 ```bash
 You can add it in dockerFile as `USER 1000`
 docker run --user=1000 ubuntu sleep 3600
@@ -34,6 +36,7 @@ docker run --user=1000 ubuntu sleep 3600
 
 ### Find which is the current user in the pod
 <details><summary>show</summary>
+
 ```bash
 kubectl exec ubuntu-sleeper whoami
 ```
