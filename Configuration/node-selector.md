@@ -1,5 +1,5 @@
-# Node Selector --> telling pod to assign to particular node
-# has limitation - only 1 label...can't put or condition or "Not <>" conditions
+### Node Selector --> telling pod to assign to particular node
+### has limitation - only 1 label...can't put or condition or "Not <>" conditions
 
 ### First Label the node
 <details><summary>show</summary>
