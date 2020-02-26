@@ -14,6 +14,11 @@ kubectl label nodes node-01 size=Large
 ### put pod to specific node using affinity
 <details><summary>show</summary>
 
+####      requiredDuringSchedulingIgnoredDuringExecution:  pod must have affinity to put it on a node. If node is already in pod, ignore
+####      preferredDuringSchedulingIgnoredDuringExecution: pod may/may not have affinity to put it on a node and can be placed to tainted node even no label assigned
+####      requiredDuringSchedulingRequiredDuringExecution
+
+
 ```bash
 apiVersion: v1
 kind: Pod
@@ -27,7 +32,7 @@ spec:
       image: ubuntu
   affinity:
     nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:  // preferredDuringSchedulingIgnoredDuringExecution, requiredDuringSchedulingRequiredDuringExecution
         nodeSelectorTerms:
         - matchExpressions:
           - key: size
