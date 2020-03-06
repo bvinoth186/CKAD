@@ -12,8 +12,11 @@
 
 
 # CKAD Aliases
- The following command sets all spacing (tab stop, soft tab stop, shift width) to two spaces, expands tabs to spaces, and turns on line numbering.
- 
+The following command sets all spacing (tab stop, soft tab stop, shift width) to two spaces, expands tabs to spaces, and turns on line numbering.
+```
+vi ~/.vimrc
+set ts=2 sts=2 sw=2 et number
+```
 
 
 # CKAD Useful commands [imperative]
