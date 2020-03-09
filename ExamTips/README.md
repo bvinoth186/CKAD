@@ -19,15 +19,17 @@ set ts=2 sts=2 sw=2 et number
 
 vim ~/.bashrc
 # then add those two:
-alias kn='kubectl config set-context --current --namespace ' // you can just do `kn np1` to switch to namespace. Mind the space
 alias k='kubectl'
+alias kn='kubectl config set-context --current --namespace ' // you can just do `kn np1` to switch to namespace. Mind the space
 
-alias kaf='kubectl apply -f'
 alias kcf='kubectl create -f'
+alias kaf='kubectl apply -f'
+
 alias kdf='k delete -f'
 
 alias kgp='kubectl get pod'
-alias kdp='kubectl delete pod --grace-period=0 --force'
+alias kdgf='kubectl delete --grace-period=0 --force'
+
 alias kdr= 'kubectl -o yaml --dry-run'
 alias kexr='k explain --recursive'
 alias krbb='kubectl run test --generator=run-pod/v1 -it --restart=Never --image=busybox --rm --'
