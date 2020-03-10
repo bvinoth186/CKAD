@@ -24,13 +24,12 @@ alias kn='kubectl config set-context --current --namespace ' // you can just do 
 
 alias kcf='kubectl create -f'
 alias kaf='kubectl apply -f'
-
 alias kdf='k delete -f'
 
 alias kgp='kubectl get pod'
 alias kdgf='kubectl delete --grace-period=0 --force'
+alias kdr= 'kubectl run -o yaml --dry-run'
 
-alias kdr= 'kubectl -o yaml --dry-run'
 alias kexr='k explain --recursive'
 alias krbb='kubectl run test --generator=run-pod/v1 -it --restart=Never --image=busybox --rm --'
 
