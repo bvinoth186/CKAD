@@ -27,8 +27,11 @@ alias kaf='kubectl apply -f'
 alias kdf='k delete -f'
 
 alias kgp='kubectl get pod'
-alias kdgf='kubectl delete --grace-period=0 --force'
+alias kdp='kubectl describe pod'
+alias kgpdr='kgp -o yaml '
 alias kdr= 'kubectl run -o yaml --dry-run'
+alias kdgf='kubectl delete --grace-period=0 --force'
+
 
 alias kexr='k explain --recursive'
 alias krbb='kubectl run test --generator=run-pod/v1 -it --restart=Never --image=busybox --rm --'
