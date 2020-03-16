@@ -49,55 +49,52 @@ source <(kubectl completion bash)
 # Help about yaml file (make sure to use --recursive)
 $ k explain Pod.spec.containers --recursive
 
-# Create a NGINX pod
+# PODS
+## Create a NGINX pod
 $ k run nginx --image=nginx --restart=Never
+$ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --port=8080 -n default  --requests=cpu=200,memory=250Mi --limits=cpu=400m,memory=500Mi  // then change to envFrom / configMapRef etc
 
-# Create a NGINX deployment with 3 replicas
+# Deploy / Service
+## Create a NGINX deployment with 3 replicas
 $ k run nginx --image=nginx --replicas=3
+# Faster way to create a Service with NodePort (First create targetPort placeholder)
+$ k expose deploy/np-nginx --port=80 --type=NodePort --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
 
-# Create a Job based on the busybox image. Execute the command "sleep 4800"
-$ k run bb-job --image=busybox --restart=OnFailure -- /bin/sh -c "sleep 4800"
-
-# Create a CronJob based on the busybox image. Write the date to stdout every minute.
-$ k run bb-cj --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- date
-
-# Create a NGINX deployment with three replicas and create a service listening on port 80
-$ k run nginx --image=nginx --replicas=3
+## Create a NGINX deployment with three replicas and create a service listening on port 80
 $ k expose deploy/nginx --port=80
 $ k run nginx --image=nginx --replicas=3 expose --port=80 --dry-run -o yaml > nginx.yaml
-$ $ kaf nginx.yaml
+$ kaf nginx.yaml
 
-# Create a WordPress pod with requests of 200m cpu, 250Mi memory and limits of 400m cpu, 500Mi memory
-$ k run wordpress --image=wordpress --restart=Never --requests=cpu=200,memory=250Mi --limits=cpu=400m,memory=500Mi
+# JOB
+## Create a Job based on the busybox image. Execute the command "sleep 4800"
+$ k run bb-job --image=busybox --restart=OnFailure -- /bin/sh -c "sleep 4800"
+
+# CronJob
+## Create a CronJob based on the busybox image. Write the date to stdout every minute.
+$ k run bb-cj --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- date
 
 # Upgrade the image version in a Deployment to nginx:1.9.7
 $ k set image deploy nginx nginx=nginx:1.9.7 --record
 $ k rollout status deploy nginx
 $ k rollout history deploy nginx
 
-# Add the label tier=frontend to the nginx Deployment
-$ k label deploy nginx tier=frontend
-
-# Add label while creating the Deployment
-$ k run nginx --image=nginx --replicas=3 --labels=tier=frontend
-
-# Remove the tier label from the Deployment
+# Labels
+## Add the label tier=frontend to the nginx Deployment
+$ k label deploy nginx tier=frontend abc=xyz
+$ k label po nginx-7bb7cd8db5-hk758 abc=ccc def=ooo
+## Add label while creating the Deployment
+$ k run nginx --image=nginx --replicas=3 -l tier=frontend,567=74 --dry-run -o yaml
+## Remove the tier label from the Deployment
 $ k label deploy nginx tier-
 
-# Faster way to create a pod with env in yaml (kind of placeholder for envFrom)
-$ k run cm-pod --image=nginx --restart=Never --env=place=holder --dry-run -o yaml // then change to envFrom / configMapRef etc
-
-# Faster way to create a Service with NodePort (First create targetPort placeholder)
-$ k expose deploy/np-nginx --port=80 --type=NodePort --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
-
-# Confirm image used for a Pod or Deployment
-$ k get deploy nginx -o yaml | grep -i image
-
-# Run/Create quickly Deployment/Pod/Job/CronJob
+# Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm)
 $ kubectl create deployment nginx --image=nginx  #deployment
 $ kubectl run nginx --image=nginx --restart=Never  #pod
 $ kubectl create job nginx --image=nginx  #job
 $ kubectl create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob
+$ k create ns abc -o yaml --dry-run
+
+
 ```
 
 
