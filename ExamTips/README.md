@@ -52,13 +52,16 @@ $ k explain Pod.spec.containers --recursive
 # PODS
 ## Create a NGINX pod
 $ k run nginx --image=nginx --restart=Never
-$ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --port=8080 -n default  --requests=cpu=200,memory=250Mi --limits=cpu=400m,memory=500Mi  // then change to envFrom / configMapRef etc
+$ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --env DB_UN=user --port=80 -n default  --requests=cpu=200m,memory=250Mi --limits=cpu=400m,memory=500Mi  // then change to envFrom / configMapRef etc
 
 # Deploy / Service
 ## Create a NGINX deployment with 3 replicas
 $ k run nginx --image=nginx --replicas=3
 # Faster way to create a Service with NodePort (First create targetPort placeholder)
 $ k expose deploy/np-nginx --port=80 --type=NodePort --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
+
+# ConfigMap
+$ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
 
 ## Create a NGINX deployment with three replicas and create a service listening on port 80
 $ k expose deploy/nginx --port=80
@@ -93,6 +96,7 @@ $ kubectl run nginx --image=nginx --restart=Never  #pod
 $ kubectl create job nginx --image=nginx  #job
 $ kubectl create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob
 $ k create ns abc -o yaml --dry-run
+$ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
 
 
 ```
