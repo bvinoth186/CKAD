@@ -60,8 +60,10 @@ $ k run nginx --image=nginx --replicas=3
 # Faster way to create a Service with NodePort (First create targetPort placeholder)
 $ k expose deploy/np-nginx --port=80 --type=NodePort --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
 
-# ConfigMap
+# ConfigMap/Secret
 $ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
+$ k create secret generic app-secret --from-literal=DB_HOST=sql01
+
 
 ## Create a NGINX deployment with three replicas and create a service listening on port 80
 $ k expose deploy/nginx --port=80
@@ -89,6 +91,10 @@ $ k label po nginx-7bb7cd8db5-hk758 abc=ccc def=ooo
 $ k run nginx --image=nginx --replicas=3 -l tier=frontend,567=74 --dry-run -o yaml
 ## Remove the tier label from the Deployment
 $ k label deploy nginx tier-
+
+# TAINT
+$ k taint nodes <node-name> key=value:taint-effect
+
 
 # Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm)
 $ kubectl create deployment nginx --image=nginx  #deployment
