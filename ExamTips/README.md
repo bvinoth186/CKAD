@@ -20,15 +20,15 @@ set ts=2 sts=2 sw=2 et number
 vim ~/.bashrc
 # then add those two:
 alias k='kubectl'
-alias kn='kubectl config set-context --current --namespace ' // you can just do `kn np1` to switch to namespace. Mind the space
+alias kn='k config set-context --current --namespace ' // you can just do `kn np1` to switch to namespace. Mind the space
 
-alias kcf='kubectl create -f'
-alias kaf='kubectl apply -f'
-alias kdgf='kubectl delete --grace-period=0 --force'
+alias kcf='k create -f'
+alias kaf='k apply -f'
+alias kdgf='k delete --grace-period=0 --force'
 alias kdgff='k delete --grace-period=0 --force -f'
 
-alias kdp='kubectl describe pod'
-alias kgp='kubectl get pod'
+alias kdp='k describe pod'
+alias kgp='k get pod'
 alias kgpyml='kgp -o yaml '
 alias kryml= 'kubectl run -o yaml --dry-run'
 
@@ -106,6 +106,9 @@ $ k create ns abc -o yaml --dry-run
 $ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
 $ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 
+
+# Some special cases
+$ k create cm configmap4 --from-file=special=config4.txt
 
 
 ```
