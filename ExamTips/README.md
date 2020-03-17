@@ -52,7 +52,7 @@ $ k explain Pod.spec.containers --recursive
 # PODS
 ## Create a NGINX pod
 $ k run nginx --image=nginx --restart=Never
-$ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --env DB_UN=user --port=80 -n default  --requests=cpu=200m,memory=250Mi --limits=cpu=400m,memory=500Mi  // then change to envFrom / configMapRef etc
+$ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --env DB_UN=user --port=80 -n default  --requests=cpu=200m,memory=250Mi --limits=cpu=400m,memory=500Mi --serviceaccount=myuser   // then change to envFrom / configMapRef etc
 
 # Deploy / Service
 ## Create a NGINX deployment with 3 replicas
@@ -109,6 +109,7 @@ $ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 
 # Some special cases
 $ k create cm configmap4 --from-file=special=config4.txt
+$ k exec -it <podname> <oneofthecontainername> -- ls # multiple container
 
 
 ```
