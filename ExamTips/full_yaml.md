@@ -59,6 +59,9 @@ spec:
     volumeMounts:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
       name: default-token-9zkp5
+    - name: myvolume
+      mountPath: /etc/lala
+      
   restartPolicy: Never
   securityContext: 
     runAsUser: 1010
@@ -89,3 +92,6 @@ spec:
     secret:
       defaultMode: 420
       secretName: default-token-9zkp5
+  - name: myvolume # just a name, you'll reference this in the pods
+    configMap:
+      name: cmvolume # name of your configmap      

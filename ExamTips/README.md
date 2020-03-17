@@ -79,7 +79,8 @@ $ k run bb-job --image=busybox --restart=OnFailure -- /bin/sh -c "sleep 4800"
 $ k run bb-cj --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- date
 
 # Upgrade the image version in a Deployment to nginx:1.9.7
-$ k set image deploy nginx nginx=nginx:1.9.7 --record
+$ k set image deploy/nginx nginx=nginx:1.9.7 --record
+$ k set image pod/nginx nginx=nginx:1.9.7
 $ k rollout status deploy nginx
 $ k rollout history deploy nginx
 
@@ -96,13 +97,15 @@ $ k label deploy nginx tier-
 $ k taint nodes <node-name> key=value:taint-effect
 
 
-# Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm)
+# Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm) / Resources
 $ kubectl create deployment nginx --image=nginx  #deployment
 $ kubectl run nginx --image=nginx --restart=Never  #pod
 $ kubectl create job nginx --image=nginx  #job
 $ kubectl create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob
 $ k create ns abc -o yaml --dry-run
 $ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
+$ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
+
 
 
 ```
