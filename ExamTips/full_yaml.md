@@ -6,19 +6,49 @@ metadata:
     abc: xyz
   name: nginx
   namespace: default
+spec:
+  volumes:
+  - name: default-token-9zkp5
+    secret:
+      secretName: default-token-9zkp5
+  - name: myvolume # just a name, you'll reference this in the pods
+    configMap:
+      name: cmvolume # name of your configmap      
+  serviceAccount: default
   securityContext: 
     runAsUser: 1010 
-spec:
   containers:
-  - command:
+  - image: nginx
+    name: nginx
+    securityContext: 
+      runAsUser: 1010
+      capabilities:
+        add: ["MAC_ADMIN"] 
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-9zkp5
+    - name: myvolume
+      mountPath: /etc/lala
+ 
+    command:
     - /bin/sh -c
     - sleep 4800
     args: ["sleep", "4800"]
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources:
+      limits:
+        cpu: 400m
+        memory: 500Mi
+      requests:
+        cpu: 200m
+        memory: 250Mi
     env:
     - name: DB_HOST
       value: sql01
     - name: DB_UN
-      value: user
+      value: user      
  #  envFrom:
  #    - secretRef: #configMapRef
  #        name: app-secret
@@ -40,34 +70,12 @@ spec:
           - /app/is_healthy
       tcpSocket:
         port: 3306
-        initialDelaySeconds: 10
+      initialDelaySeconds: 10
       periodSeconds: 10
       timeoutSeconds: 5
       failureThreshold: 8
-    image: nginx
-    name: nginx
-    ports:
-    - containerPort: 80
-      protocol: TCP
-    resources:
-      limits:
-        cpu: 400m
-        memory: 500Mi
-      requests:
-        cpu: 200m
-        memory: 250Mi
-    volumeMounts:
-    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: default-token-9zkp5
-    - name: myvolume
-      mountPath: /etc/lala
       
   restartPolicy: Never
-  securityContext: 
-    runAsUser: 1010
-    capabilities:
-      add: ["MAC_ADMIN"]
-  serviceAccount: default
   nodeSelector:  # kubectl label nodes node-01 size=Large
     size: Large
   tolerations: # kubectl taint nodes <node-name> key=value:taint-effect
@@ -87,11 +95,3 @@ spec:
             operator: In  // can be NotIn,Exists
             values:
             - Large       
-  volumes:
-  - name: default-token-9zkp5
-    secret:
-      defaultMode: 420
-      secretName: default-token-9zkp5
-  - name: myvolume # just a name, you'll reference this in the pods
-    configMap:
-      name: cmvolume # name of your configmap      
