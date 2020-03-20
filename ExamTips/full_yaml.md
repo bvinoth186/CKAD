@@ -25,7 +25,7 @@ spec:
       volumeID: <volumeID>
       fsType: ext4
   - name: pvc-my-storage
-    persistentVolumeClaim:
+    persistentVolumeClaim:  # this has to be created
       claimName: mypvc
   serviceAccountName: default
   securityContext: 
