@@ -3,16 +3,17 @@ kind: PersistentVolume
 metadata:
   name: pv0003
 spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
 # ReadWriteOnce – the volume can be mounted as read-write by a single node
 # ReadOnlyMany – the volume can be mounted read-only by many nodes
 # ReadWriteMany – the volume can be mounted as read-write by many nodes
+  storageClassName: slow
   accessModes:
     - ReadWriteOnce 
-  persistentVolumeReclaimPolicy: Recycle # Possible values: Delete/Recycle 
-  storageClassName: slow
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Recycle # Possible values: Delete/Recycle/Retain
+
 
 
 
@@ -24,13 +25,14 @@ kind: PersistentVolumeClaim
 metadata:
   name: myclaim
 spec:
+  storageClassName: slow
   accessModes:
     - ReadWriteOnce
-  volumeMode: Filesystem
   resources:
     requests:
       storage: 8Gi
-  storageClassName: slow
+  volumeMode: Filesystem
+
   selector:
     matchLabels:
       release: "stable"
