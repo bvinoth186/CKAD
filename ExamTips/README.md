@@ -79,10 +79,19 @@ $ k run bb-job --image=busybox --restart=OnFailure -- /bin/sh -c "sleep 4800"
 $ k run bb-cj --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- date
 
 # Upgrade the image version in a Deployment to nginx:1.9.7
+## set image of deployement
 $ k set image deploy/nginx nginx=nginx:1.9.7 --record
+## set image of pod
 $ k set image pod/nginx nginx=nginx:1.9.7
-$ k rollout status deploy nginx
-$ k rollout history deploy nginx
+$ k rollout status deploy/nginx-deployment
+$ k rollout history deploy/nginx-deployment
+## Get more info about revision
+$ k rollout history deploy/nginx-deployment --revision=2
+## Rollback to previous revision
+$ k rollout undo deploy/nginx-deployment
+## Rollback to specific revision
+$ k rollout undo deploy/nginx-deployment --to-revision=3
+
 
 # Labels
 ## Add the label tier=frontend to the nginx Deployment

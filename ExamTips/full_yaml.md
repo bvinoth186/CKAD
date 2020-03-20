@@ -2,7 +2,7 @@ apiVersion: v1 # For Pod,service,replicationController, Namespace, configMap, Se
 kind: Pod
 metadata:
   annotations:
-    commit: 232n48dnfud0b0b0
+    commit: 232n48dnfud0b0b0gi
   labels:
     aaa: bbb
     abc: xyz
@@ -19,6 +19,11 @@ spec:
   serviceAccountName: default
   securityContext: 
     runAsUser: 1010 
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 2
+    type: RollingUpdate
   containers:
   - image: nginx
     name: nginx
