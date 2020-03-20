@@ -24,6 +24,9 @@ spec:
     awsElasticBlockStore:
       volumeID: <volumeID>
       fsType: ext4
+  - name: pvc-my-storage
+    persistentVolumeClaim:
+      claimName: mypvc
   serviceAccountName: default
   securityContext: 
     runAsUser: 1010 

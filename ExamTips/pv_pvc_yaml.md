@@ -4,7 +4,7 @@ metadata:
   name: pv0003
 spec:
   capacity:
-    storage: 5Gi
+    storage: 1Gi
   volumeMode: Filesystem
 # ReadWriteOnce – the volume can be mounted as read-write by a single node
 # ReadOnlyMany – the volume can be mounted read-only by many nodes
