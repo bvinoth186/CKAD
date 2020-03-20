@@ -20,6 +20,10 @@ spec:
     hostPath:
       path: /etc/foo
       type: Directory  
+  - name: volumeformultinodes
+    awsElasticBlockStore:
+      volumeID: <volumeID>
+      fsType: ext4
   serviceAccountName: default
   securityContext: 
     runAsUser: 1010 
