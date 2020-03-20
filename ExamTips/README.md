@@ -120,10 +120,10 @@ $ k top pods
 $ k top pod <pod-name>
 
 # Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm) / Resources
-$ kubectl create deployment nginx --image=nginx  #deployment
-$ kubectl run nginx --image=nginx --restart=Never  #pod
-$ kubectl create job nginx --image=nginx  #job
-$ kubectl create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob
+$ k create deployment nginx --image=nginx  #deployment
+$ k run nginx --image=nginx --restart=Never  #pod
+$ k create job nginx --image=nginx  #job
+$ k create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob
 $ k create ns abc -o yaml --dry-run
 $ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
 $ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
@@ -132,7 +132,9 @@ $ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 # Some special cases
 $ k create cm configmap4 --from-file=special=config4.txt
 $ k exec -it <podname> <oneofthecontainername> -- ls # multiple container
-
+$ k scale --replicas=6 rs myapp-replicaset
+$ k replace -f rs-def.yml
+$ k scale --replicas=6 -f rs-def.yml
 
 ```
 

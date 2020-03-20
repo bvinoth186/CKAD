@@ -15,7 +15,11 @@ spec:
       secretName: default-token-9zkp5
   - name: myvolume # just a name, you'll reference this in the pods
     configMap:
-      name: cmvolume # name of your configmap      
+      name: cmvolume # name of your configmap    
+  - name: myawesomevolume
+    hostPath:
+      path: /etc/foo
+      type: Directory  
   serviceAccountName: default
   securityContext: 
     runAsUser: 1010 
