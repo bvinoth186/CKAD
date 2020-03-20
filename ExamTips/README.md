@@ -92,10 +92,23 @@ $ k label po nginx-7bb7cd8db5-hk758 abc=ccc def=ooo
 $ k run nginx --image=nginx --replicas=3 -l tier=frontend,567=74 --dry-run -o yaml
 ## Remove the tier label from the Deployment
 $ k label deploy nginx tier-
+## get pod based on labels
+$ kgp --show-labels
+$ kgp -l tier=backend,abc=ccc
+$ kgp -l tier!=backend,abc=ccc
+$ kgp -l 'tier not in (backend,frontend)'
+
 
 # TAINT
 $ k taint nodes <node-name> key=value:taint-effect
 
+# Logging 
+$ k logs <podname> -c <oneofthecontainername> # multiple container
+
+# Monitoring
+$ k top nodes
+$ k top pods
+$ k top pod <pod-name>
 
 # Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm) / Resources
 $ kubectl create deployment nginx --image=nginx  #deployment

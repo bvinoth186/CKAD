@@ -1,6 +1,8 @@
 apiVersion: v1 # For Pod,service,replicationController, Namespace, configMap, Secret
 kind: Pod
 metadata:
+  annotations:
+    commit: 232n48dnfud0b0b0
   labels:
     aaa: bbb
     abc: xyz
@@ -14,7 +16,7 @@ spec:
   - name: myvolume # just a name, you'll reference this in the pods
     configMap:
       name: cmvolume # name of your configmap      
-  serviceAccount: default
+  serviceAccountName: default
   securityContext: 
     runAsUser: 1010 
   containers:
