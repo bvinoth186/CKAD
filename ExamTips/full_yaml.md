@@ -1,11 +1,10 @@
-############# VSSS - C (-VR-PINN-CARLES) -COMP/PAR 
+############# VSSS - C (-VR-PIN-CARLES) -N-COMP/PAR 
 #########
-##VR-PINN-CARLES
+##VR-PIN-CARLES
 ###volumeMounts
 ##resources
 ##Port
 ##Image
-##nodeSelector
 ##name
 ##command
 ##args
@@ -55,25 +54,11 @@ spec:
       maxUnavailable: 2
     type: RollingUpdate
   containers:
-  - image: nginx
-    name: nginx
-    securityContext: 
-      runAsUser: 1010
-      capabilities:
-        add: ["MAC_ADMIN"] 
-    volumeMounts:
+  - volumeMounts:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
       name: default-token-9zkp5
     - name: myvolume
       mountPath: /etc/lala
- 
-    command:
-    - /bin/sh -c
-    - sleep 4800
-    args: ["sleep", "4800"]
-    ports:
-    - containerPort: 80
-      protocol: TCP
     resources:
       limits:
         cpu: 400m
@@ -81,21 +66,15 @@ spec:
       requests:
         cpu: 200m
         memory: 250Mi
-    env:
-    - name: DB_HOST
-      value: sql01
-    - name: DB_UN
-      value: user      
- #  envFrom:
- #    - secretRef: #configMapRef
- #        name: app-secret
- #  env:
- #    - name: DB_HOST
-#       valueFrom:
-#         secretKeyRef: # configMapKeyRef
-#           name: app-secret
-#           key: DB_HOST
-
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    image: nginx
+    name: nginx
+    command:
+    - /bin/sh -c
+    - sleep 4800
+    args: ["sleep", "4800"]
   # livenessProbe:
     readinessProbe:
       httpGet:
@@ -111,6 +90,26 @@ spec:
       periodSeconds: 10
       timeoutSeconds: 5
       failureThreshold: 8
+    env:
+    - name: DB_HOST
+      value: sql01
+    - name: DB_UN
+      value: user      
+ #  envFrom:
+ #    - secretRef: #configMapRef
+ #        name: app-secret
+ #  env:
+ #    - name: DB_HOST
+#       valueFrom:
+#         secretKeyRef: # configMapKeyRef
+#           name: app-secret
+#           key: DB_HOST
+    securityContext: 
+      runAsUser: 1010
+      capabilities:
+        add: ["MAC_ADMIN"]  
+    
+
       
   restartPolicy: Never
   completions: 5 # used for jobs
