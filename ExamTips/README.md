@@ -54,6 +54,9 @@ $ k explain Pod.spec.containers --recursive
 $ k run nginx --image=nginx --restart=Never
 $ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --env DB_UN=user --port=80 -n default  --requests=cpu=200m,memory=250Mi --limits=cpu=400m,memory=500Mi --serviceaccount=myuser   // then change to envFrom / configMapRef etc
 
+$ kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml # args 
+
+
 # Deploy / Service
 ## Create a NGINX deployment with 3 replicas
 $ k run nginx --image=nginx --replicas=3
@@ -135,6 +138,7 @@ $ k exec -it <podname> <oneofthecontainername> -- ls # multiple container
 $ k scale --replicas=6 rs myapp-replicaset
 $ k replace -f rs-def.yml
 $ k scale --replicas=6 -f rs-def.yml
+$ kubectl exec -it busybox -c busybox2 -- /bin/sh ls
 
 ```
 
