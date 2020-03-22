@@ -27,6 +27,8 @@ spec:
   - name: pvc-my-storage
     persistentVolumeClaim:  # this has to be created
       claimName: mypvc
+  - name: myvolume #
+    emptyDir: {} #
   serviceAccountName: default
   securityContext: 
     runAsUser: 1010 
@@ -94,6 +96,8 @@ spec:
       failureThreshold: 8
       
   restartPolicy: Never
+  completions: 5 # used for jobs
+  parallelism: 5 # used for jobs
   nodeSelector:  # kubectl label nodes node-01 size=Large
     size: Large
   tolerations: # kubectl taint nodes <node-name> key=value:taint-effect

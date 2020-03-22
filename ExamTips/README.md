@@ -51,8 +51,7 @@ $ k explain Pod.spec.containers --recursive
 
 # PODS
 ## Create a NGINX pod
-$ k run nginx --image=nginx --restart=Never
-$ k run nginx --image=nginx --restart=Never  -l abc=xyz,aaa=bbb  --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --env DB_UN=user --port=80 -n default  --requests=cpu=200m,memory=250Mi --limits=cpu=400m,memory=500Mi --serviceaccount=myuser   // then change to envFrom / configMapRef etc
+$ k run nginx --image=nginx --restart=Never -l abc=xyz,aaa=bbb --command "/bin/sh -c" "sleep 4800" --env DB_HOST=sql01 --env DB_UN=user --port=80 -n default  --requests=cpu=200m,memory=250Mi --limits=cpu=400m,memory=500Mi --serviceaccount=myuser   // then change to envFrom / configMapRef etc
 
 $ kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml # args 
 
@@ -60,6 +59,10 @@ $ kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/
 # Deploy / Service
 ## Create a NGINX deployment with 3 replicas
 $ k run nginx --image=nginx --replicas=3
+## Scale deploy to 5 replicas
+$ k scale deploy nginx --replicas=5
+## Autoscale the deployment, pods between 5 and 10, targetting CPU utilization at 80%
+$ k autoscale deploy nginx --min=5 --max=10 --cpu-percent=80
 # Faster way to create a Service with NodePort (First create targetPort placeholder)
 $ k expose deploy/np-nginx --port=80 --type=NodePort --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
 
@@ -94,6 +97,10 @@ $ k rollout history deploy/nginx-deployment --revision=2
 $ k rollout undo deploy/nginx-deployment
 ## Rollback to specific revision
 $ k rollout undo deploy/nginx-deployment --to-revision=3
+## Pause the rollout of the deployment
+$ k rollout pause deploy nginx
+## Resume the rollout
+$ k rollout resume deploy nginx
 
 
 # Labels
@@ -103,13 +110,21 @@ $ k label po nginx-7bb7cd8db5-hk758 abc=ccc def=ooo
 ## Add label while creating the Deployment
 $ k run nginx --image=nginx --replicas=3 -l tier=frontend,567=74 --dry-run -o yaml
 ## Remove the tier label from the Deployment
-$ k label deploy nginx tier-
+$ k label deploy nginx tier-  
+## Remove label from pod
+$ k label po nginx1 nginx2 nginx3 app-
+
 ## get pod based on labels
 $ kgp --show-labels
-$ kgp -l tier=backend,abc=ccc
+$ kgp -l tier=backend,abc=ccc # or kgp --selector=tier=backend --selector=abc=ccc
 $ kgp -l tier!=backend,abc=ccc
 $ kgp -l 'tier not in (backend,frontend)'
 
+# Annotations
+## annotate pod
+$ k annotate po nginx1 nginx2 nginx3 description='my description'
+## Remove annotations from pod
+$ k annotate po nginx{1..3} description-
 
 # TAINT
 $ k taint nodes <node-name> key=value:taint-effect
@@ -123,10 +138,12 @@ $ k top pods
 $ k top pod <pod-name>
 
 # Run/Create quickly Deployment/Pod/Job/CronJob/namespace (ns)/configMap (cm) / Resources
-$ k create deployment nginx --image=nginx  #deployment
+$ k create deployment nginx --image=nginx  #deployment - creates deployment then replace replicas
 $ k run nginx --image=nginx --restart=Never  #pod
+$ k run nginx --image=nginx --restart=OnFailure  #Job - will be deprecated
 $ k create job nginx --image=nginx  #job
-$ k create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob
+$ k create cronjob nginx --image=nginx --schedule="* * * * *"  #cronJob - will be deprecated
+$ k run nginx --image=nginx --restart=OnFailure --schedule="* * * * *" # cronjob
 $ k create ns abc -o yaml --dry-run
 $ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
 $ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
@@ -138,7 +155,11 @@ $ k exec -it <podname> <oneofthecontainername> -- ls # multiple container
 $ k scale --replicas=6 rs myapp-replicaset
 $ k replace -f rs-def.yml
 $ k scale --replicas=6 -f rs-def.yml
-$ kubectl exec -it busybox -c busybox2 -- /bin/sh ls
+$ k exec -it busybox -c busybox2 -- /bin/sh ls
+$ k label po nginx2 app=v2 --overwrite # change label
+$ k get po -L app # Get the label 'app' for the pods
+
+
 
 ```
 
