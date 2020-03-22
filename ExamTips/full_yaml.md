@@ -1,3 +1,20 @@
+############# VSSS - C (-VR-PINN-CARLES) -COMP/PAR 
+#########
+##VR-PINN-CARLES
+###volumeMounts
+##resources
+##Port
+##Image
+##nodeSelector
+##name
+##command
+##args
+##readiness
+##liveness
+##env
+##securityContext
+
+
 apiVersion: v1 # For Pod,service,replicationController, Namespace, configMap, Secret
 kind: Pod
 metadata:
