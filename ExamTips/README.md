@@ -14,6 +14,8 @@
 # CKAD Aliases
 The following command sets all spacing (tab stop, soft tab stop, shift width) to two spaces, expands tabs to spaces, and turns on line numbering.
 ```
+sudo -i
+
 vi ~/.vimrc
 set ts=2 sts=2 sw=2 et number
 
@@ -79,6 +81,12 @@ $ kaf nginx.yaml
 # JOB
 ## Create a Job based on the busybox image. Execute the command "sleep 4800"
 $ k run bb-job --image=busybox --restart=OnFailure -- /bin/sh -c "sleep 4800"
+## Check logs of the job
+$ k logs job/helloworld
+## terminate job after 30 seconds 
+Add job.spec.activeDeadlineSeconds=30
+
+
 
 # CronJob
 ## Create a CronJob based on the busybox image. Write the date to stdout every minute.
@@ -113,8 +121,8 @@ $ k run nginx --image=nginx --replicas=3 -l tier=frontend,567=74 --dry-run -o ya
 $ k label deploy nginx tier-  
 ## Remove label from pod
 $ k label po nginx1 nginx2 nginx3 app-
-## Get pods with label app
-$ kgp -L app
+## add label to multiple pod one liner
+$ k label po nginx1 nginx2 nginx3 app=true
 
 ## get pod based on labels
 $ kgp --show-labels
