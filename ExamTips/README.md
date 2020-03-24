@@ -73,7 +73,7 @@ $ k create secret generic app-secret --from-literal=DB_HOST=sql01
 
 ## Create a NGINX deployment with three replicas and create a service listening on port 80
 $ k expose deploy/nginx --port=80
-$ k run nginx --image=nginx --replicas=3 expose --port=80 --dry-run -o yaml > nginx.yaml
+$ k run nginx --image=nginx --replicas=3 --expose --port=80 --dry-run -o yaml > nginx.yaml
 $ kaf nginx.yaml
 
 # JOB
@@ -113,6 +113,8 @@ $ k run nginx --image=nginx --replicas=3 -l tier=frontend,567=74 --dry-run -o ya
 $ k label deploy nginx tier-  
 ## Remove label from pod
 $ k label po nginx1 nginx2 nginx3 app-
+## Get pods with label app
+$ kgp -L app
 
 ## get pod based on labels
 $ kgp --show-labels
