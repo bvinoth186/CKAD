@@ -161,11 +161,11 @@ $ k create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 
 # Some special cases
 $ k create cm configmap4 --from-file=special=config4.txt
-$ k exec -it <podname> <oneofthecontainername> -- ls # multiple container
+$ k exec -it <podname> -c <oneofthecontainername> -- ls # multiple container
+$ k exec -it busybox -c busybox2 -- /bin/sh ls
 $ k scale --replicas=6 rs myapp-replicaset
 $ k replace -f rs-def.yml
 $ k scale --replicas=6 -f rs-def.yml
-$ k exec -it busybox -c busybox2 -- /bin/sh ls
 $ k label po nginx2 app=v2 --overwrite # change label
 $ k get po -L app # Get the label 'app' for the pods
 
