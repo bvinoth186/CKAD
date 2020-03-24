@@ -1,3 +1,4 @@
+```
 ############# VSSS - C (-VR-PIN-CARLES) -N-COMP/PAR 
 #########
 ##VR-PIN-CARLES
@@ -108,9 +109,6 @@ spec:
       runAsUser: 1010
       capabilities:
         add: ["MAC_ADMIN"]  
-    
-
-      
   restartPolicy: Never
   completions: 5 # used for jobs
   parallelism: 5 # used for jobs
@@ -133,3 +131,4 @@ spec:
             operator: In  // can be NotIn,Exists
             values:
             - Large       
+```
