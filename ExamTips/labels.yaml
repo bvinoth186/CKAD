@@ -1,0 +1,25 @@
+Resources that support set-based requirements
+Newer resources, such as Job, Deployment, ReplicaSet, and DaemonSet, support set-based requirements as well.
+
+```
+selector:
+  matchLabels:
+    component: redis
+  matchExpressions:
+    - {key: tier, operator: In, values: [cache]}
+    - {key: environment, operator: NotIn, values: [dev]}
+```
+
+For service and replicationController
+```
+selector:
+  component: redis
+```
+
+For network Policy
+```
+ podSelector:
+  matchLabels:
+    role: client
+```          
+
