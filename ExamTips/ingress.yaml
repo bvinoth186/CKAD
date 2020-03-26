@@ -9,9 +9,14 @@ spec:
   rules:
   - http:
       paths:
-      - path: /testpath
+      - path: /wear
         pathType: Prefix
         backend:
-          serviceName: test
+          serviceName: wear-service
+          servicePort: 80
+      - path: /watch
+        pathType: Prefix
+        backend:
+          serviceName: watch-service
           servicePort: 80
 ```
