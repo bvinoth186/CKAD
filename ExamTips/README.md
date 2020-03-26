@@ -65,8 +65,25 @@ $ k run nginx --image=nginx --replicas=3
 $ k scale deploy nginx --replicas=5
 ## Autoscale the deployment, pods between 5 and 10, targetting CPU utilization at 80%
 $ k autoscale deploy nginx --min=5 --max=10 --cpu-percent=80
-# Faster way to create a Service with NodePort (First create targetPort placeholder)
-$ k expose deploy/np-nginx --port=80 --type=NodePort --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
+
+# Services
+## Faster way to create a Service with NodePort (First create targetPort placeholder)
+$ k expose deploy/np-nginx --port=80 --type=NodePort --selector=size=large --target-port=90 --dry-run -o yaml > np-svc.yaml // then add nodePort: xxxxx
+## Create a service for a replicated nginx, which serves on port 80 and connects to the containers on port 8000.
+k expose rc nginx --port=80 --target-port=8000
+## Create a service for a replication controller identified by type and name specified in "nginx-controller.yaml", which serves on port 80 and connects to the containers on port 8000.
+k expose -f nginx-controller.yaml --port=80 --target-port=8000
+## Create a service for a pod valid-pod, which serves on port 444 with the name "frontend"
+k expose pod valid-pod --port=444 --name=frontend
+## Create a second service based on the above service, exposing the container port 8443 as port 443 with the name "nginx-https"
+k expose service nginx --port=443 --target-port=8443 --name=nginx-https
+## Create a service for a replicated streaming application on port 4100 balancing UDP traffic and named 'video-stream'.
+k expose rc streamer --port=4100 --protocol=UDP --name=video-stream
+## Create a service for a replicated nginx using replica set, which serves on port 80 and connects to the containers on port 8000.
+k expose rs nginx --port=80 --target-port=8000
+## Create a service for an nginx deployment, which serves on port 80 and connects to the containers on port 8000.
+k expose deployment nginx --port=80 --target-port=8000
+
 
 # ConfigMap/Secret
 $ k create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2

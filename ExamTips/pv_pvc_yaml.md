@@ -12,6 +12,8 @@ spec:
     - ReadWriteOnce 
   capacity:
     storage: 1Gi
+  hostPath:
+    path: /etc/foo
   volumeMode: Filesystem
   persistentVolumeReclaimPolicy: Recycle # Possible values: Delete/Recycle/Retain
 
